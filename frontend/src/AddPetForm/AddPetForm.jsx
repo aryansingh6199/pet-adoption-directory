@@ -1,5 +1,5 @@
-import {useState} from 'react'
-import { useEffect } from 'react'
+import {useState, useEffect,useRef } from 'react'
+import "./AddPetForm.css"
 function Form(){
     const[info,setInfo]=useState({
         name:"",
@@ -17,6 +17,7 @@ function Form(){
     const[popup,setPopup]=useState(false)
     const [errors, setErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const fileInputRef = useRef(null);
     useEffect(() => {
     if (popup) {
       const timer = setTimeout(() => setPopup(false), 3000);
@@ -28,6 +29,7 @@ function Form(){
       const name= event.target.name
       const value=(event.target.type==="file")?event.target.files[0]:event.target.value
       setInfo({...info,[name]:value})
+      
     }
     function handleSubmit(event){
         event.preventDefault()
@@ -36,6 +38,7 @@ function Form(){
   if (!info.age || Number(info.age) <= 0) {
     newErrors.age = 'Please enter a valid age above 0.';
   }
+  
 
   if (!/^\d{10}$/.test(info.number)) {
     newErrors.number = 'Enter a valid 10-digit phone number.';
@@ -45,14 +48,14 @@ function Form(){
 }
 if (!info.Image) {
   newErrors.Image = 'Please upload an image.';
-} 
+} else{
  if (!info.Image.type.startsWith("image/")) {
   newErrors.Image = 'Only image files are allowed.';
 } 
  if (info.Image.size > 2 * 1024 * 1024) {
   newErrors.Image = 'Image must be less than 2MB.';
 }
-
+}
 if (Object.keys(newErrors).length > 0) {
     setErrors(newErrors);
     return;
@@ -83,6 +86,9 @@ if (Object.keys(newErrors).length > 0) {
         vaccine:"",
         category:"",
         Image:""})
+         if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
         })
         .catch(error=>{alert("something went wrong")})
         .finally(() => setIsSubmitting(false));
@@ -128,7 +134,8 @@ if (Object.keys(newErrors).length > 0) {
         <label><input required className="radio" name="vaccine" type="radio" value={"Yes"} checked={info.vaccine==="Yes"} onChange={changeHandler}/>Yes</label>
         <label><input className="radio" name="vaccine" type="radio" value={"No"} checked={info.vaccine==="No"} onChange={changeHandler}/>No</label>
         <label>Image:</label>
-        <input  className="textField" type="file" name="Image"  accept="image/*" onChange={changeHandler} required/>
+        <input ref={fileInputRef} className="textField" type="file" name="Image"  accept="image/*" onChange={changeHandler} required/>
+        {errors.Image && <small style={{ color: "red" }}>{errors.Image}</small>}
         {info.Image && (<img src={URL.createObjectURL(info.Image)} alt="Pet Preview" 
                         style={{ width: '200px', marginTop: '10px' }}/>)}
         <label htmlFor="price">Price($) :</label>
