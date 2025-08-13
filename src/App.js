@@ -1,16 +1,14 @@
-import React from 'react';
-import Navbar from './components/Navbar';
-import WelcomeMessage from './components/WelcomeMessage';
-import AvailablePets from './components/AvaliablePets';
-
+import React from "react";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 import './App.css';
+
 
 function App() {
   return (
-    <div className="App">
+    <div className="font-sans">
       <Navbar />
-      <WelcomeMessage />
-      <AvailablePets />
+      <Home />
     </div>
   );
 }
