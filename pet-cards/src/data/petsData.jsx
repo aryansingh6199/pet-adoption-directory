@@ -1,5 +1,3 @@
-// src/data/petsData.js
-
 const allPetsData = [
   {
     "id": "p1",

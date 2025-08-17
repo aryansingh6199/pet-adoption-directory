@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 const PetCard = ({ pet, onViewDetails, isLiked, toggleFavorite }) => {
 
+  const [isImageBroken, setIsImageBroken] = useState(false);
   const handleHeartClick = (e) => {
-    e.stopPropagation(); 
-    toggleFavorite(pet.id); 
+    e.stopPropagation();
+    toggleFavorite(pet.id);
   };
 
   const handleInfoClick = (e) => {
     e.stopPropagation();
+    onViewDetails(pet);
+  };
+
+  const handleCardClick = () => {
     onViewDetails(pet);
   };
 
@@ -25,17 +30,25 @@ const PetCard = ({ pet, onViewDetails, isLiked, toggleFavorite }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl border border-gray-100">
+    <div
+      onClick={handleCardClick}
+      className="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col cursor-pointer transform transition-all duration-300 hover:scale-[1.05] hover:shadow-2xl border border-gray-100"
+    >
       <div className="relative">
-        <img
-          src={pet.image}
-          alt={pet.name}
-          className="w-full h-64 object-cover rounded-t-2xl"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = `https://placehold.co/400x300/e0e0e0/555555?text=No+Image`;
-          }}
-        />
+        {isImageBroken ? (
+          <div className="w-full h-64 bg-gray-200 flex items-center justify-center rounded-t-2xl">
+            <p className="text-gray-500 font-bold text-center text-lg">{pet.name}</p>
+          </div>
+        ) : (
+          <img
+            src={pet.image}
+            alt={pet.name}
+            className="w-full h-64 object-cover rounded-t-2xl"
+            onError={(e) => {
+              setIsImageBroken(true);
+            }}
+          />
+        )}
         <span className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${getStatusBadgeClasses(pet.status)}`}>
           {pet.status}
         </span>
@@ -43,6 +56,7 @@ const PetCard = ({ pet, onViewDetails, isLiked, toggleFavorite }) => {
 
       <div className="p-5 flex-grow flex flex-col justify-between">
         <div>
+  
           <h3 className="text-3xl font-extrabold text-blue-800 mb-1 leading-tight">{pet.name}</h3>
           <p className="text-gray-700 text-base font-medium mb-2">{pet.breed}</p>
           <p className="text-gray-500 text-sm">
@@ -51,6 +65,7 @@ const PetCard = ({ pet, onViewDetails, isLiked, toggleFavorite }) => {
             <span className="font-semibold">{pet.location}</span>
           </p>
         </div>
+  
         <div className="flex justify-end items-center mt-5 space-x-3 relative">
           <button
             onClick={handleHeartClick}
