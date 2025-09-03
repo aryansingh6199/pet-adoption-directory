@@ -3,6 +3,8 @@ const petsRoutes=require("./routes/pets");
 require("dotenv").config();
 const connectDB=require("./config/db");
 connectDB();
+const cors=require("cors");
+app.use(cors());
 const app=express();
 const port=process.env.PORT||5000;
 app.use(express.json());
