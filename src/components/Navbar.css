@@ -1,0 +1,110 @@
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* space between logo and items */
+  align-items: center; /* vertically center everything */
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #2f4054, #1d2b3a);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Logo Styling */
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-left: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.logo-highlight {
+  color: #ffffff;
+  background: linear-gradient(45deg, #ff512f, #f09819);
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 4px;
+  animation: bounce 2s infinite;
+}
+
+/* Logo Animation */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Navigation Items */
+.nav-items {
+  display: flex;
+  align-items: center; /* vertical center */
+  gap: 20px;
+  margin: 0;
+}
+
+.nav-items li {
+  list-style: none;
+}
+
+.nav-items a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-items a:hover {
+  color: #ffeaa7;
+}
+
+.nav-items a:active {
+  color: #ffd700;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  display: none;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #2f4054, #1d2b3a);
+  border: none;
+  color: white;
+  margin-right: 1rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background: linear-gradient(45deg, #ff8e53, #ffcc70);
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .toggle-btn {
+    display: block;
+  }
+
+  .nav-items {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start; /* stack in mobile */
+    background: linear-gradient(180deg, #ff6b6b, #ffcc70);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    padding: 16px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .nav-items.show {
+    display: flex;
+  }
+
+  .nav-items a {
+    padding: 10px 0;
+  }
+}
