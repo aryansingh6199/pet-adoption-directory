@@ -1,6 +1,7 @@
-const express=require("express");
-const router=express.Router();
-const pet=require("../models/pet");
+import express from "express";
+import Pet from "../models/pet.js";
+
+const router = express.Router();
 
 // GET all pets
 router.get("/", async (req, res, next) => {
@@ -16,6 +17,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { name, category, gender, age, breed } = req.body;
+
     // Input validation (basic)
     if (!name || !category || !gender || !age || !breed) {
       return res.status(400).json({ message: "All fields are required" });
@@ -29,4 +31,5 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
-module.exports=router;
+
+export default router;
